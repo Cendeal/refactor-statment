@@ -140,3 +140,38 @@ test('should return statement with Amount is 400 when statement given audience o
       'Amount owed is $400.00\n' +
       'You earned 0 credits \n');
 });
+
+
+test('should return statement with Amount is 330 when statement given audience of comedy is 10', t => {
+  //given
+  const invoice = {
+    'customer': 'BigCo',
+    'performances': [
+      {
+        'playID': 'as-like',
+        'audience': 10,
+      }
+    ],
+  };
+  const plays = {
+    'hamlet': {
+      'name': 'Hamlet',
+      'type': 'tragedy',
+    },
+    'as-like': {
+      'name': 'As You Like It',
+      'type': 'comedy',
+    },
+    'othello': {
+      'name': 'Othello',
+      'type': 'tragedy',
+    },
+  };
+  //when
+  const result = statement(invoice, plays);
+  //then
+  t.is(result, 'Statement for BigCo\n' +
+      ' As You Like It: $330.00 (10 seats)\n' +
+      'Amount owed is $330.00\n' +
+      'You earned 2 credits \n');
+});
