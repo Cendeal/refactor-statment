@@ -68,9 +68,18 @@ class Calculator {
         amount += 300 * audience;
         return amount
     }
+
+    static calculateVolumeCredits(type,audience){
+        let volumeCredits = Math.max(audience - 30, 0);
+        if ('comedy' === type) volumeCredits += Math.floor(audience / 5);
+        return volumeCredits
+    }
 }
 
 function statement(invoice, plays) {
+    return getStatement(invoice,plays).printText()
+}
+function getStatement(invoice, plays){
     let totalAmount = 0;
     let volumeCredits = 0;
     const performances = []
@@ -78,17 +87,13 @@ function statement(invoice, plays) {
     for (let perf of invoice.performances) {
         const play = plays[perf.playID];
         let thisAmount = Calculator.calculateAmount(play.type, perf.audience)
-        // add volume credits
-        volumeCredits += Math.max(perf.audience - 30, 0);
-        // add extra credit for every ten comedy attendees
-        if ('comedy' === play.type) volumeCredits += Math.floor(perf.audience / 5);
+        volumeCredits += Calculator.calculateVolumeCredits(play.type,perf.audience)
         totalAmount += thisAmount;
         const performance = new Performance(play.name, thisAmount / 100, perf.audience)
         performances.push(performance)
     }
-    return new Statement(invoice.customer, volumeCredits, totalAmount / 100, performances).printText()
+    return new Statement(invoice.customer, volumeCredits, totalAmount / 100, performances)
 }
-
 module.exports = {
     statement
 };
