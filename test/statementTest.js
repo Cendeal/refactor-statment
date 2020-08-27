@@ -45,3 +45,35 @@ test('should return statement when statement given play.type includes in tragedy
       'You earned 47 credits \n');
 });
 
+test('should throw unknown type when statement given play.type is not includes in tragedy and comedy', t => {
+  //given
+  const invoice = {
+    'customer': 'BigCo',
+    'performances': [
+      {
+        'playID': 'hamlet',
+        'audience': 55,
+      },
+      {
+        'playID': 'as-like',
+        'audience': 35,
+      },
+      {
+        'playID': 'othello',
+        'audience': 40,
+      },
+    ],
+  };
+  const plays = {
+    'hamlet': {
+      'name': 'test',
+      'type': 'test',
+    }
+  };
+  //when
+  const result = t.throws(()=>{
+    statement(invoice, plays);
+  })
+  //then
+  t.is(result.message,"unknown type: test")
+});
