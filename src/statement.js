@@ -33,6 +33,18 @@ class Statement{
   }
 }
 
+class Calculator{
+  static calculateTragedyAmount(audience){
+    let amount = 40000;
+    if (audience > 30) {
+      amount += 1000 * (audience - 30);
+    }
+    return amount
+  }
+  static calculateComedyAmount(){
+
+  }
+}
 function statement (invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
@@ -43,10 +55,7 @@ function statement (invoice, plays) {
     let thisAmount = 0;
     switch (play.type) {
       case 'tragedy':
-        thisAmount = 40000;
-        if (perf.audience > 30) {
-          thisAmount += 1000 * (perf.audience - 30);
-        }
+        thisAmount = Calculator.calculateTragedyAmount(perf.audience)
         break;
       case 'comedy':
         thisAmount = 30000;
