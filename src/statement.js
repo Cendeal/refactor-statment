@@ -41,8 +41,13 @@ class Calculator{
     }
     return amount
   }
-  static calculateComedyAmount(){
-
+  static calculateComedyAmount(audience){
+    let amount  = 30000;
+    if (audience > 20) {
+      amount += 10000 + 500 * (audience - 20);
+    }
+    amount += 300 * audience;
+    return amount
   }
 }
 function statement (invoice, plays) {
@@ -58,11 +63,7 @@ function statement (invoice, plays) {
         thisAmount = Calculator.calculateTragedyAmount(perf.audience)
         break;
       case 'comedy':
-        thisAmount = 30000;
-        if (perf.audience > 20) {
-          thisAmount += 10000 + 500 * (perf.audience - 20);
-        }
-        thisAmount += 300 * perf.audience;
+        thisAmount = Calculator.calculateComedyAmount(perf.audience)
         break;
       default:
         throw new Error(`unknown type: ${play.type}`);
