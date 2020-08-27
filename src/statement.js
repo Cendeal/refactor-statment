@@ -32,7 +32,15 @@ class Statement {
     }
 
     printHtml() {
-
+        return `<h1>Statement for ${this.owner}</h1>\n` +
+        '<table>\n' +
+        '<tr><th>play</th><th>seats</th><th>cost</th></tr>' +
+            this.performances.map(performance=>{
+                return   ` <tr><td>${performance.name}</td><td>${performance.seats}</td><td>${format(performance.total)}</td></tr>\n`
+            }).join('')+
+        '</table>\n' +
+        `<p>Amount owed is <em>${format(this.amount)}</em></p>\n` +
+        `<p>You earned <em>${this.credits}</em> credits</p>\n`
     }
 }
 
@@ -79,6 +87,12 @@ class Calculator {
 function statement(invoice, plays) {
     return getStatement(invoice,plays).printText()
 }
+
+
+function statementHtml(invoice, plays){
+    return getStatement(invoice,plays).printHtml()
+}
+
 function getStatement(invoice, plays){
     let totalAmount = 0;
     let volumeCredits = 0;
@@ -94,6 +108,8 @@ function getStatement(invoice, plays){
     }
     return new Statement(invoice.customer, volumeCredits, totalAmount / 100, performances)
 }
+
 module.exports = {
-    statement
+    statement,
+    statementHtml
 };
