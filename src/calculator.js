@@ -31,10 +31,11 @@ class Calculator {
         return amount
     }
 
-    static calculateVolumeCredits(type,audience){
+    static calculateVolumeCredits(type, audience) {
         let volumeCredits = Math.max(audience - 30, 0);
         if ('comedy' === type) volumeCredits += Math.floor(audience / 5);
         return volumeCredits
     }
 }
-module.exports=Calculator
+
+module.exports = Calculator

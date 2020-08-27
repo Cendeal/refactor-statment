@@ -1,4 +1,5 @@
 const {format} = require('./utils')
+
 class Performance {
     constructor(name, total, seats) {
         this.name = name
@@ -10,4 +11,5 @@ class Performance {
         return ` ${this.name}: ${format(this.total)} (${this.seats} seats)`
     }
 }
+
 module.exports = Performance
